@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Racial Harm Genome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/148/148800.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+
+</head>
+
+<body translate="no">
+
+    <div>
+        <div>
+            <h4 class="chart-name">Racial Harm Genome</h4>
+            <img src="Logo.png" alt="Logo" class="logo">
+            <div class="network-graph-component-container" style="width: 100vw; height: 100vh;">
+                <div class="network-graph" id="network-graph-container-parent">
+                    <div id="network-graph-container-parent-inner">
+                        <div id="network-graph-container">
+                            <canvas width="960" height="600"></canvas>
+                        </div>
+                    </div>
+                    <div class="right-panel">
+                        <div class="insights-wrapper">
+                            <div class="stat-name">Node Size:
+                                <select id="select-by-node-size" class="custom-select">
+                                    <option value="Cited By">Cited By</option>
+                                    <option value="Cites">Cites</option>
+                                    <option value="Research Method Population Scale">Research Method Population Scale
+                                    </option>
+                                    <option value="Harm Magnitude">Harm Magnitude</option>
+                                    <option value="Harm Population Impact">Harm Population Impact</option>
+                                </select>
+                            </div>
+
+                            <div class="stat-name">Secondary Links:
+                                <select id="select-by-secondary-links" class="custom-select">
+                                    <option value="Secondary Determinant Analyzed 1">Secondary Determinant Analyzed 1
+                                    </option>
+                                    <option value="Secondary Determinant Analyzed 2">Secondary Determinant Analyzed 2
+                                    </option>
+                                    <option value="Secondary Determinant Analyzed 3">Secondary Determinant Analyzed 3
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="insights-wrapper insights-wrapper-legends" id="legend-container-parent">
+                            <button class="title-side MTS collapsible-btn"
+                                onclick="toggleExpand(event)">Legends</button>
+                            <div id="legends-container">
+                                <svg id="legends-svg"></svg>
+                            </div>
+                        </div>
+
+                        <div class="insights-wrapper stat-name">
+                            <div class="stat-name research-metadata-container hidden">
+                                Research Metadata:
+                                <div class="hover-datatable">
+                                    <div class="datatable-info-row"> </div>
+                                </div>
+                            </div>
+
+                            <div class="stat-name racial-harm-metadata-container hidden">
+                                Racial Harm Metadata:
+                                <div class="hover-datatable">
+                                    <div class="datatable-info-row"> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="libs/d3.v7.min.js"></script>
+    <script src="scripts/d3script.js"></script>
+
+    <script>
+        let chart;
+        let dataUrl = 'https://docs.google.com/spreadsheets/d/16VcuXZJJRHC0DeUFzvopJrkWXR04NC-Ig120JRvWq2w/pub?gid=0&single=true&output=csv';
+        // dataUrl = 'data/miserables.json'
+
+        d3.csv(dataUrl)
+            .then(csvFileData => {
+
+                chart = Chart()
+                    .svgHeight(450)
+                    .svgWidth(600)
+                    .container('#network-graph-container')
+                    .rawData(csvFileData)
+                    .render()
+            })
+    </script>
+
+    <script>
+        function toggleExpand(event) {
+            const button = event.target;
+            const parentElement = button.parentNode;
+
+            if (parentElement) {
+                parentElement.classList.toggle('expanded');
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
